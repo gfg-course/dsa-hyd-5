@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool compare(char op, char cl) {
+    return
+        (op == '(' && cl == ')') ||
+        (op == '[' && cl == ']') ||
+        (op == '{' && cl == '}');
+}
+
+// TC: O(n)
+// AS: O(n)
+bool isBalanced(string s) {
+
+    stack<char> helper;
+
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+            helper.push(s[i]);
+        } else {
+            if (helper.empty()) {
+                return false;
+            }
+            char op = helper.top();
+            helper.pop();
+            if(compare(op, s[i]) == false) {
+                return false;
+            }
+        }
+    }
+
+    // if (helper.empty()) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
+    return helper.empty();
+}
+
+int main() {
+
+    cout << isBalanced("({[]})[]{}") << endl;
+    cout << isBalanced("({[]})[}{}") << endl;
+    cout << isBalanced("((())") << endl;
+    cout << isBalanced("[()]]") << endl;
+}
